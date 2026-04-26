@@ -79,7 +79,13 @@ Example mote output:
 - `Received packet from node 2`
 
 ### Contiki Evidence
-![Demonstration Video](videos/contiki-demo.mp4)
+![Contiki Evidence 1](images/contiki/1.png)
+![Contiki Evidence 2](images/contiki/2.png)
+![Contiki Evidence 3](images/contiki/3.png)
+![Contiki Evidence 4](images/contiki/4.png)
+![Contiki Evidence 5](images/contiki/5.png)
+![Contiki Evidence 6](images/contiki/6.png)
+![Contiki Evidence 7](images/contiki/7.png)
 
 
 ### Results & Discussion
