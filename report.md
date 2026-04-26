@@ -51,33 +51,41 @@
 ## Part 2: Cooja Simulation
 
 ### Simulation Files
-[HSSMS.csc](../cooja/HSSMS.csc) and related Contiki simulation files
+[HSSMS.csc](cooja/HSSMS.csc) and related Contiki simulation files
 
 Included files:
 - `HSSMS.csc` - Main simulation configuration
 - `sensor.c` - Sensor node code
 - `gateway.c` - Gateway node code
 - `Makefile` - Build configuration
-- `symbols.c / symbols.h` - Symbol table for debugging
 
 ### Simulation Execution Steps
 
-1. [Step 1 - Install Contiki OS and Cooja]
-2. [Step 2 - Navigate to cooja/ directory]
-3. [Step 3 - Run `make` to compile simulation]
-4. [Step 4 - Open Cooja GUI]
-5. [Step 5 - Load HSSMS.csc configuration]
-6. [Step 6 - Start simulation and observe output]
+1. `cd contiki/tools/cooja`
+2. `ant run`
+3. Create a new simulation and name it `HSSMS`
+4. Go to **Motes** > **Sky Mote** and add the first mote
+5. Select the first mote as the **Gateway Node** and attach the `gateway.c` file, then compile it
+6. Create the second mote as the **Sensor Node**, attach the `sensor.c` file, then compile it
+7. Add a total of **three sensor motes**
+8. Click **Start** and observe the mote output in the Cooja console
 
-### Contiki Command Line Evidence
-![CLI Compilation Output](images/cli_compilation_output.png)
+Example mote output:
 
-### Network Verification
-![Ping Results](images/ping_results.png)
-![Cooja Network Visualization](images/cooja_network.png)
+- `Gateway node started`
+- `Sensor node started`
+- `Sent: D:142, T:28, G:431`
+- `Sent: D:87, T:30, G:389`
+- `Received packet from node 2`
+
+### Contiki Evidence
+![Demonstration Video](videos/contiki-demo.mp4)
+
 
 ### Results & Discussion
-[Insert analysis of RPL multi-hop routing and node behavior, network topology visualization, and communication patterns]
+The current Cooja setup does not use RPL multi-hop routing. Instead, it uses a simple broadcast-based communication model over the Rime stack, where the sensor node periodically sends simulated readings and the gateway node receives them directly. This means the behavior observed in the simulation is best described as single-hop broadcast communication rather than routed multi-hop forwarding.
+
+In the network visualization, the gateway acts as the collection point for the sensor motes. Each sensor periodically generates a packet containing distance, temperature, and gas values, then broadcasts it on the configured channel. The gateway output confirms successful delivery by printing received messages in the console, which demonstrates the node interaction pattern and message flow across the simulation.
 
 ---
 
@@ -86,7 +94,7 @@ Included files:
 ### Project Overview
 **Design/Model Summary:**
 
-The HSSMS (Home Security and Safety Monitoring System) is a dual-component IoT system that integrates:
+The HSSMS (Home Security and Safety Monitoring System) project integrates:
 1. An ESP32-based real-time security monitoring device with WiFi connectivity and web dashboard
 2. A Contiki/Cooja network simulation for testing distributed sensor networks
 
@@ -145,7 +153,7 @@ The system maintains a circular buffer of the last 10 distance readings (200 ms 
 
 **Sensor Logic:**
 - Lower analog reading = Higher gas concentration (inverted sensor characteristic)
-- Below 600 ppm: "Safe" air quality
+- Above 600 ppm: "Safe" air quality
 - At or below 600 ppm: Gas alarm triggered
 - Continuous monitoring (no duty cycle)
 
